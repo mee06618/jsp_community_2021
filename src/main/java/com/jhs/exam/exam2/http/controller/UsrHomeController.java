@@ -24,6 +24,6 @@ public class UsrHomeController extends Controller {
 	}
 
 	private void actionDoSendMail(Rq rq) {
-		Ut.sendMail("jangka512@gmail.com", "reociwilzsujsbtd", "no-reply@lemon-cm.com", "레몬 커뮤니티 알림", "jangka512@gmail.com", "제목ㅋㅋㅋ", "내용 ㅋㅋㅋ");
+		Ut.sendMail("메일@gmail.com", "비번", "no-reply@lemon-cm.com", "레몬 커뮤니티 알림", "jangka512@gmail.com", "제목ㅋㅋㅋ", "내용 ㅋㅋㅋ");
 	}
 }
