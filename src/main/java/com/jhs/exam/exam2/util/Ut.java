@@ -1,5 +1,6 @@
 package com.jhs.exam.exam2.util;
 
+import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
@@ -11,7 +12,6 @@ import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -97,15 +97,13 @@ public class Ut {
 			return defaultValue;
 		}
 	}
-	
+
 	public static String toPrettyJson(Object obj, String defaultValue) {
 		ObjectMapper om = new ObjectMapper();
 		om.configure(JsonGenerator.Feature.QUOTE_FIELD_NAMES, false);
-		
+
 		try {
-			return om
-					.writerWithDefaultPrettyPrinter()
-					.writeValueAsString(obj);
+			return om.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
 			return defaultValue;
 		}
@@ -176,18 +174,41 @@ public class Ut {
 
 		return 1;
 	}
-}
 
-class MailAuth extends Authenticator {
+	// 파일내용 읽어오기
+	public static String getFileContents(String filePath) {
+		String rs = null;
+		try {
+			// 바이트 단위로 파일읽기
+			FileInputStream fileStream = null; // 파일 스트림
 
-	PasswordAuthentication pa;
+			fileStream = new FileInputStream(filePath);// 파일 스트림 생성
+			// 버퍼 선언
+			byte[] readBuffer = new byte[fileStream.available()];
+			while (fileStream.read(readBuffer) != -1) {
+			}
 
-	public MailAuth(String mailId, String mailPw) {
+			rs = new String(readBuffer);
 
-		pa = new PasswordAuthentication(mailId, mailPw);
+			fileStream.close(); // 스트림 닫기
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+
+		return rs;
 	}
 
-	public PasswordAuthentication getPasswordAuthentication() {
-		return pa;
+	public static String getTempPassword(int length) {
+		int index = 0;
+		char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+
+		StringBuffer sb = new StringBuffer();
+
+		for (int i = 0; i < length; i++) {
+			index = (int) (charArr.length * Math.random());
+			sb.append(charArr[index]);
+		}
+
+		return sb.toString();
 	}
 }
